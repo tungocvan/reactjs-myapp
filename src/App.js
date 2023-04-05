@@ -1,25 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { Fragment } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { publicRoutes, privateRoutes } from '~/routes';
+import { UserAuthContextProvider } from './context/userAuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import HeaderOnly from '~/layouts/HeaderOnly';
+import AdminLayout from '~/layouts/AdminLayout';
+import Layout from '~/layouts/AdminLayout/Layout';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <UserAuthContextProvider>
+            <Routes>
+                {privateRoutes.map((route, index) => {
+                    let Component = route.component;
+                    let LayoutPrivate = Fragment;
+                    if (route.layout === 'Layout') {
+                        LayoutPrivate = Layout;
+                    }
+                    return (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            element={
+                                <LayoutPrivate>
+                                    <ProtectedRoute>
+                                        <Component />
+                                    </ProtectedRoute>
+                                </LayoutPrivate>
+                            }
+                        />
+                    );
+                })}
+
+                {publicRoutes.map((route, index) => {
+                    let Component = route.component;
+                    let LayoutPublic = Fragment;
+                    if (route.layout === 'AdminLayout') {
+                        LayoutPublic = AdminLayout;
+                    }
+                    if (route.layout === 'Layout') {
+                        LayoutPublic = Layout;
+                    }
+                    return (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            element={
+                                <LayoutPublic>
+                                    <Component />
+                                </LayoutPublic>
+                            }
+                        />
+                    );
+                })}
+            </Routes>
+        </UserAuthContextProvider>
+    );
 }
 
 export default App;
