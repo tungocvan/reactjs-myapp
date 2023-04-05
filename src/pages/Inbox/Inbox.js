@@ -18,17 +18,16 @@ function UploadFile({ title, onFileChange }) {
 
 function Inbox() {
     const [file, setFile] = useState();
-
     const handleFileChange = (e) => {
         if (e.target.files) {
             setFile(e.target.files[0]);
         }
     };
 
-    console.log('file:', file);
+    //console.log('file:', file);
     return (
-        <div className="d-flex container w-70">
-            <div className="w-30">
+        <div className="d-flex container">
+            <div className="w-30 hide-inbox-sidebar">
                 <div className="card text-white bg-primary">
                     <div className="card-body">
                         <h4 className="card-title text-white">Hướng dẫn</h4>
