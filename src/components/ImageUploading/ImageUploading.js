@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ImageUploading from 'react-images-uploading';
 import classNames from 'classnames/bind';
 import styles from './ImageUploading.module.scss';
@@ -10,7 +10,7 @@ function ImageMyUploading() {
     const [images, setImages] = React.useState([]);
     const maxNumber = 10;
     const maxFileSize = 5 * 1024 * 1024;
-    const acceptType = ['jpg', 'gif', 'png', 'bmp'];
+    const acceptType = ['jpg', 'gif', 'png', 'bmp', 'doc'];
     const onChange = (imageList, addUpdateIndex, errors) => {
         // data for submit
         //console.log(imageList, addUpdateIndex);
@@ -49,10 +49,10 @@ function ImageMyUploading() {
                         &nbsp;
                         <button onClick={onImageRemoveAll}>Remove all images</button>
                         {imageList.map((image, index) => {
-                            console.log(image);
                             return (
                                 <div key={index} className="image-item">
                                     <img src={image['data_url']} alt="" width="100" />
+
                                     <div className="image-item__btn-wrapper">
                                         <button onClick={() => onImageUpdate(index)}>Update</button>
                                         <button onClick={() => onImageRemove(index)}>Remove</button>

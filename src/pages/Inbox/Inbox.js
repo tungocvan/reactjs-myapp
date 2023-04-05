@@ -1,13 +1,31 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 //import classNames from 'classnames/bind';
 //import styles from './Inbox.module.scss';
 
 //const cx = classNames.bind(styles);
+
+function UploadFile({ title, onFileChange }) {
+    const idLabel = 'file-' + Math.floor(Math.random() * 10);
+    return (
+        <div className="mb-3">
+            <label className="form-label" htmlFor={idLabel}>
+                {title}
+            </label>
+            <input className="form-control" id={idLabel} type="file" onChange={onFileChange} />
+        </div>
+    );
+}
+
 function Inbox() {
-    useEffect(() => {
-        // Dropzone.autoDiscover = false;
-        // let myDropzone = new Dropzone("#my-form");
-    }, []);
+    const [file, setFile] = useState();
+
+    const handleFileChange = (e) => {
+        if (e.target.files) {
+            setFile(e.target.files[0]);
+        }
+    };
+
+    console.log('file:', file);
     return (
         <div className="d-flex container w-70">
             <div className="w-30">
@@ -108,6 +126,7 @@ function Inbox() {
                                         />
                                     </div>
                                 </form>
+                                <UploadFile title="Đơn xin chuyển trường" onFileChange={handleFileChange} />
                             </div>
                         </div>
                     </div>
