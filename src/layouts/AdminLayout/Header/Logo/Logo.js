@@ -20,10 +20,10 @@ function Logo() {
                     <span className="toggle-line" />
                 </span>
             </button>
-            <Link className="navbar-brand me-1 me-sm-3" to="../../index.html">
+            <Link className="navbar-brand me-1 me-sm-3" to="/">
                 <div className="d-flex align-items-center">
                     <div className="d-flex align-items-center">
-                        <img src="../../assets/img/icons/logo.png" alt="phoenix" width={27} />
+                        <img src="/assets/img/icons/logo.png" alt="phoenix" width={27} />
                         <p className="logo-text ms-2 d-none d-sm-block">HAMADA</p>
                     </div>
                 </div>

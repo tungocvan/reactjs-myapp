@@ -18,17 +18,17 @@ import Message from '~/pages/Message';
 const publicRoutes = [
     { path: '/', component: Login },
     { path: '/signup', component: Signup },
-    { path: '/contact', component: Contact, layout: 'Layout' },
+    { path: '/contact/*', component: Contact, layout: 'Layout' },
     { path: '/inbox', component: Inbox, layout: 'Layout' },
+    { path: '/product/:categoryId/p?/:productId?', component: Product, layout: 'Layout' },
+    { path: '*', component: Login },
 ];
 
 const privateRoutes = [
     { path: '/home', component: Home, layout: 'Layout' },
     { path: '/post', component: Post, layout: 'HeaderOnly' },
-    { path: '/product', component: Product, layout: 'HeaderOnly' },
     { path: '/logout', component: Logout, layout: null },
     { path: '/feedback', component: Feedback, layout: 'HeaderOnly' },
-    { path: '/product', component: Product, layout: 'HeaderOnly' },
     { path: '/language', component: Language, layout: 'HeaderOnly' },
     { path: '/profiles', component: Profiles, layout: 'HeaderOnly' },
     { path: '/settings', component: Settings, layout: 'HeaderOnly' },
