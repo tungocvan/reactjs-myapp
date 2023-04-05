@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import classNames from 'classnames/bind';
-import styles from './Logo.module.scss';
+//import classNames from 'classnames/bind';
+//import styles from './Logo.module.scss';
 
-const cx = classNames.bind(styles);
+//const cx = classNames.bind(styles);
 
 function Logo() {
     return (

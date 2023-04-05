@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
-import classNames from 'classnames/bind';
-import styles from './AdminLayout.module.scss';
+//import { Link } from 'react-router-dom';
+//import classNames from 'classnames/bind';
+//import styles from './AdminLayout.module.scss';
 import Sidebar from './Sidebar';
 import Header from './Header';
-const cx = classNames.bind(styles);
+//const cx = classNames.bind(styles);
 
 function AdminLayout({ children }) {
     return (

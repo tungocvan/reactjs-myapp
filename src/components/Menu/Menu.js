@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import classNames from 'classnames/bind';
-import styles from './Menu.module.scss';
+import React from 'react';
+//import classNames from 'classnames/bind';
+//import styles from './Menu.module.scss';
 import './styles.css';
 
-const cx = classNames.bind(styles);
+//const cx = classNames.bind(styles);
 const Menu = ({ items, activeMenu, handleMenuClick }) => {
     const renderMenuItem = (menuItem) => {
         const hasChildren = menuItem.children && menuItem.children.length > 0;

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import classNames from 'classnames/bind';
-import styles from './Inbox.module.scss';
+//import classNames from 'classnames/bind';
+//import styles from './Inbox.module.scss';
 
-const cx = classNames.bind(styles);
+//const cx = classNames.bind(styles);
 function Inbox() {
     useEffect(() => {
         // Dropzone.autoDiscover = false;

@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import { publicRoutes, privateRoutes } from '~/routes';
 import { UserAuthContextProvider } from './context/userAuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import HeaderOnly from '~/layouts/HeaderOnly';
 import AdminLayout from '~/layouts/AdminLayout';
 import Layout from '~/layouts/AdminLayout/Layout';
 
