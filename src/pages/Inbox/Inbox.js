@@ -40,7 +40,7 @@ function Inbox() {
         formData.append('email', email.value);
         formData.append('date', formattedDateTime(dateTime));
         console.log('formData:', formData);
-        fetch('https://app.tungocvan.app/api/upload', {
+        fetch(process.env.REACT_APP_URL, {
             method: 'POST',
             body: formData,
         })
