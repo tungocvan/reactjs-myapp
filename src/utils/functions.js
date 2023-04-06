@@ -8,4 +8,26 @@ const slugify = (str) => {
     return str;
 };
 
-export { slugify };
+const formattedDateTime = (now, char = '', format = '') => {
+    const date = now.getDate();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+
+    // Định dạng lại chuỗi ngày/tháng/năm và giờ/phút
+    const formattedDate = ('0' + date).slice(-2); // Định dạng ngày với 2 chữ số, vd: 01, 02, ..., 31
+    const formattedMonth = ('0' + month).slice(-2); // Định dạng tháng với 2 chữ số, vd: 01, 02, ..., 12
+    const formattedYear = year.toString().slice(-2); // Định dạng năm với 2 chữ số, vd: 21, 22, ..., 99
+    const formattedHours = ('0' + hours).slice(-2); // Định dạng giờ với 2 chữ số, vd: 00, 01, ..., 23
+    const formattedMinutes = ('0' + minutes).slice(-2); // Định dạng phút với 2 chữ số, vd: 00, 01, ..., 59
+
+    // Tạo chuỗi kết quả theo định dạng "dd/mm/yy hh:mm"
+    if (format === '') {
+        return `${formattedDate}${char}${formattedMonth}${char}${formattedYear}`;
+    } else {
+        return `${formattedDate}${char}${formattedMonth}${char}${formattedYear} ${formattedHours}:${formattedMinutes}`;
+    }
+};
+
+export { slugify, formattedDateTime };

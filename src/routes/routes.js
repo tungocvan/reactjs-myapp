@@ -18,14 +18,14 @@ import Message from '~/pages/Message';
 const publicRoutes = [
     { path: '/', component: Login },
     { path: '/signup', component: Signup },
+    { path: '/home', component: Home, layout: 'Layout' },
     { path: '/contact/*', component: Contact, layout: 'Layout' },
-    { path: '/inbox', component: Inbox, layout: 'Layout' },
     { path: '/product/:categoryId/p?/:productId?', component: Product, layout: 'Layout' },
+    { path: '/bmct', component: Inbox, layout: 'Layout' },
     { path: '*', component: Login },
 ];
 
 const privateRoutes = [
-    { path: '/home', component: Home, layout: 'Layout' },
     { path: '/post', component: Post, layout: 'HeaderOnly' },
     { path: '/logout', component: Logout, layout: null },
     { path: '/feedback', component: Feedback, layout: 'HeaderOnly' },
