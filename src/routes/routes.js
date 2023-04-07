@@ -16,7 +16,7 @@ import Message from '~/pages/Message';
 
 // Public routes
 const publicRoutes = [
-    { path: '/', component: Login },
+    { path: '/', component: Home, layout: 'Layout' },
     { path: '/signup', component: Signup },
     { path: '/home', component: Home, layout: 'Layout' },
     { path: '/contact/*', component: Contact, layout: 'Layout' },

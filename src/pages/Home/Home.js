@@ -7,7 +7,7 @@ function Home() {
     return (
         <div className={cx('wrapper')}>
             <Link to="/bmct">
-                <button class="btn btn-primary btn-lg me-1 mb-1" type="button">
+                <button className="btn btn-primary btn-lg me-1 mb-1" type="button">
                     CHUYỂN TRƯỜNG
                 </button>
             </Link>
