@@ -16,6 +16,9 @@ function App() {
                     if (route.layout === 'Layout') {
                         LayoutPrivate = Layout;
                     }
+                    if (route.layout === 'AdminLayout') {
+                        LayoutPrivate = AdminLayout;
+                    }
                     return (
                         <Route
                             key={index}

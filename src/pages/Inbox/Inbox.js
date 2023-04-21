@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+//import axios from 'axios';
 //import { Link } from 'react-router-dom';
 //import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { formattedDateTime } from '~/utils/functions';
@@ -20,8 +22,11 @@ function UploadFile({ title, onFileChange, name }) {
 }
 
 function Inbox() {
+    let params = useParams();
+
     const [file, setFile] = useState();
     const [hoso, setHoso] = useState('');
+    const [hosoCurrent, setHosoCurrent] = useState('');
     const [status, setStatus] = useState(true);
     const handleFileChange = (e) => {
         if (e.target.files) {
@@ -42,7 +47,7 @@ function Inbox() {
         formData.append('date', formattedDateTime(dateTime));
         console.log('formData:', formData);
         setStatus(false);
-        fetch(process.env.REACT_APP_URL_UPLOAD, {
+        fetch('https://api.tungocvan.com/api/upload', {
             method: 'POST',
             body: formData,
         })
@@ -57,7 +62,7 @@ function Inbox() {
                 setStatus(true);
             });
     };
-    console.log('hoso:', hoso);
+    //console.log('hoso:', hoso);
 
     const handleDownload = () => {
         const fileUrl = '/assets/bm/bm01.pdf';
@@ -68,6 +73,20 @@ function Inbox() {
         link.setAttribute('download', '');
         link.click();
     };
+
+    useEffect(() => {
+        if (params?.phone) {
+            //console.log(params.phone); // "one/two"
+            fetch('https://api.tungocvan.com/api/tracuu/hoso/' + params?.phone, {
+                method: 'GET',
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    setHosoCurrent(data);
+                });
+        }
+    }, []);
 
     return (
         (status && (
@@ -185,6 +204,30 @@ function Inbox() {
                                             <td>{hoso.email}</td>
                                             <td>Hồ sơ đã nộp</td>
                                             <td>Đang chờ duyệt</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
+                        <div>
+                            {hosoCurrent && (
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Phone</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Content</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{hosoCurrent.phone[0]?.name}</td>
+                                            <td>{hosoCurrent.phone[0]?.phone}</td>
+                                            <td>{hosoCurrent.phone[0]?.email}</td>
+                                            <td>Hồ sơ đã nộp</td>
+                                            <td>{hosoCurrent.phone[0]?.status}</td>
                                         </tr>
                                     </tbody>
                                 </table>

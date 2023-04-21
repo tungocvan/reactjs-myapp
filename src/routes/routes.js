@@ -22,6 +22,7 @@ const publicRoutes = [
     { path: '/contact/*', component: Contact, layout: 'Layout' },
     { path: '/product/:categoryId/p?/:productId?', component: Product, layout: 'Layout' },
     { path: '/bmct', component: Inbox, layout: 'Layout' },
+    { path: '/bmct/phone/:phone', component: Inbox, layout: 'Layout' },
     { path: '*', component: Login },
 ];
 
@@ -31,7 +32,7 @@ const privateRoutes = [
     { path: '/feedback', component: Feedback, layout: 'HeaderOnly' },
     { path: '/language', component: Language, layout: 'HeaderOnly' },
     { path: '/profiles', component: Profiles, layout: 'HeaderOnly' },
-    { path: '/settings', component: Settings, layout: 'HeaderOnly' },
+    { path: '/settings', component: Settings, layout: 'Layout' },
     { path: '/uploadVideo', component: UploadVideo, layout: 'HeaderOnly' },
     { path: '/message', component: Message, layout: 'HeaderOnly' },
 ];

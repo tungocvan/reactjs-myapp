@@ -76,7 +76,7 @@ function Account() {
                         <div className="overflow-auto scrollbar" style={{ height: '10rem' }}>
                             <ul className="nav d-flex flex-column mb-2 pb-1">
                                 <li className="nav-item">
-                                    <Link className="nav-link px-3" to="#!">
+                                    <Link className="nav-link px-3" to="/settings">
                                         {' '}
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,7 @@ function Account() {
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                                             <circle cx={12} cy={7} r={4} />
                                         </svg>
-                                        <span>Profile</span>
+                                        <span>Quản trị Hồ sơ</span>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
@@ -233,7 +233,7 @@ function Account() {
                             <hr />
                             <div className="px-3">
                                 {' '}
-                                <Link className="btn btn-phoenix-secondary d-flex flex-center w-100" to="#!">
+                                <Link className="btn btn-phoenix-secondary d-flex flex-center w-100" to="/logout">
                                     {' '}
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 //import classNames from 'classnames/bind';
 //import styles from './Search.module.scss';
@@ -5,18 +6,26 @@ import { Link } from 'react-router-dom';
 //const cx = classNames.bind(styles);
 
 function Search() {
+    const [phone, setPhone] = useState('');
+    console.log('phone:', phone);
     return (
         <div
             className="search-box navbar-top-search-box d-none d-lg-block"
             data-list='{"valueNames":["title"]}'
             style={{ width: '25rem' }}
         >
-            <form className="position-relative" data-bs-toggle="search" data-bs-display="static">
+            <form
+                className="position-relative"
+                data-bs-toggle="search"
+                data-bs-display="static"
+                action={'/bmct/phone/' + phone}
+            >
                 <input
                     className="form-control search-input fuzzy-search rounded-pill form-control-sm"
                     type="search"
                     placeholder="Search..."
                     aria-label="Search"
+                    onChange={(e) => setPhone(e.target.value)}
                 />
                 <svg
                     className="svg-inline--fa fa-magnifying-glass search-box-icon"
@@ -35,6 +44,12 @@ function Search() {
                     />
                 </svg>
                 {/* <span class="fas fa-search search-box-icon"></span> Font Awesome fontawesome.com */}
+                <input
+                    type="submit"
+                    className="btn btn-primary me-1 mb-1"
+                    style={{ position: 'absolute', right: -115, top: 0, height: 35 }}
+                    value="Tìm kiếm"
+                />
             </form>
             <div
                 className="btn-close position-absolute end-0 top-50 translate-middle cursor-pointer shadow-none"

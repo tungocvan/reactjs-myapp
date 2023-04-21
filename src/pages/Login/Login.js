@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Alert } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
@@ -14,8 +14,9 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [show, setShow] = useState(false)
-    const { logIn, googleSignIn, user} = useUserAuth();
+    const [show, setShow] = useState(false);
+    const { logIn, googleSignIn, user } = useUserAuth();
+
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -32,59 +33,60 @@ const Login = () => {
         e.preventDefault();
         try {
             await googleSignIn();
-            navigate('/home');
+            navigate('/settings');
         } catch (error) {
             console.log(error.message);
         }
     };
 
     useEffect(() => {
-        if(user === null || Object.keys(user).length === 0){
-            setShow(true)            
-        }else{
-            navigate('/home');
+        if (user === null || Object.keys(user).length === 0) {
+            setShow(true);
+        } else {
+            console.log('user:', user);
+            navigate('/settings');
         }
-        console.log(user);    
-    }, [user,navigate]);
-    
-    return show && (        
-        <div className={cx('wrapper')}>
-            <div className={cx('box') + ' p-4'}>
-                <h2 className="mb-3">Đăng nhập Tài khoản</h2>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Control
-                            type="email"
-                            placeholder="Địa chỉ email"
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </Form.Group>
+    }, [user, navigate]);
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Control
-                            type="password"
-                            placeholder="Mật khẩu"
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </Form.Group>
+    return (
+        show && (
+            <div className={cx('wrapper')}>
+                <div className={cx('box') + ' p-4'}>
+                    <h2 className="mb-3">Đăng nhập Tài khoản</h2>
+                    {error && <Alert variant="danger">{error}</Alert>}
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Control
+                                type="email"
+                                placeholder="Địa chỉ email"
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </Form.Group>
 
-                    <div className="d-grid gap-2">
-                        <Button variant="primary" type="Submit">
-                            Đằng nhập
-                        </Button>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Control
+                                type="password"
+                                placeholder="Mật khẩu"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <div className="d-grid gap-2">
+                            <Button variant="primary" type="Submit">
+                                Đằng nhập
+                            </Button>
+                        </div>
+                    </Form>
+                    <hr />
+                    <div>
+                        <GoogleButton className={cx('g-btn')} type="dark" onClick={handleGoogleSignIn} />
                     </div>
-                </Form>
-                <hr />
-                <div>
-                    <GoogleButton className={cx('g-btn')} type="dark" onClick={handleGoogleSignIn} />
+                </div>
+                <div className={cx('box') + ' p-4 mt-3 text-center'}>
+                    Bạn chưa có tài khoản? <Link to="/signup">Đăng ký</Link>
                 </div>
             </div>
-            <div className={cx('box') + ' p-4 mt-3 text-center'}>
-                Bạn chưa có tài khoản? <Link to="/signup">Đăng ký</Link>
-            </div>
-        </div>
-        
+        )
     );
 };
 
