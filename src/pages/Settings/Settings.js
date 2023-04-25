@@ -2,22 +2,32 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './Settings.module.scss';
+import UploadFile from '~/components/UploadFile';
+import { formattedDateTime } from '~/utils/functions';
 const cx = classNames.bind(styles);
-
+const url = process.env.REACT_APP_URL_SERVER;
 function Settings() {
+    const [file, setFile] = useState();
     const [hoso, setHoso] = useState('');
     const [editHoso, setEditHoso] = useState(false);
-    const [editHosoStatus, setEditHosoStatus] = useState(false);
+    const [editHosoStatus, setEditHosoStatus] = useState(true);
     const [hosoItem, sethosoItem] = useState('');
     const [noidung, setNoidung] = useState('');
     const [statusAction, setStatusAction] = useState('');
+
+    const handleFileChange = (e) => {
+        if (e.target.files) {
+            setFile(e.target.files[0]);
+        }
+    };
+
     const hanlderXuly = (item, action) => {
         setNoidung('');
         if (action === 'xoa') {
             setEditHosoStatus(true);
             const formData = new FormData();
             formData.append('id', item.id);
-            fetch('http://127.0.0.1:8000/api/delete', {
+            fetch(url + 'delete', {
                 method: 'POST',
                 body: formData,
             })
@@ -38,11 +48,14 @@ function Settings() {
         console.log('update');
         setEditHosoStatus(true);
         setStatusAction(action);
+        let dateTime = new Date();
         const formData = new FormData();
         formData.append('id', hosoItem.id);
         formData.append('status', action);
         formData.append('noidung', noidung);
-        fetch('http://127.0.0.1:8000/api/update', {
+        formData.append('date', formattedDateTime(dateTime));
+        formData.append('file', file);
+        fetch(url + 'update', {
             method: 'POST',
             body: formData,
         })
@@ -51,17 +64,19 @@ function Settings() {
                 console.log(data);
                 setEditHoso(false);
                 setEditHosoStatus(false);
+                setFile(null);
             });
     };
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/tracuu/hoso', {
+        fetch(url + 'tracuu/hoso', {
             method: 'GET',
         })
             .then((response) => response.json())
             .then((data) => {
                 // console.log(data.hoso.data);
                 setHoso(data.hoso.data);
+                setEditHosoStatus(false);
             });
     }, []);
 
@@ -128,9 +143,7 @@ function Settings() {
                                     <td>{hosoItem?.phone}</td>
                                     <td>{hosoItem?.email}</td>
                                     <td>
-                                        <Link to={'http://127.0.0.1:8000/api/download/' + hosoItem?.filename}>
-                                            Download
-                                        </Link>
+                                        <Link to={url + 'download/' + hosoItem?.filename}>Download</Link>
                                     </td>
                                     <td>{hosoItem?.status}</td>
                                 </tr>
@@ -149,6 +162,7 @@ function Settings() {
                         defaultValue={noidung}
                         onChange={(e) => setNoidung(e.target.value)}
                     />
+                    <UploadFile title="Đơn xin chuyển trường" onFileChange={handleFileChange} name="filebieumau" />
                     <div style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }}>
                         <div className="mb-0">
                             <button
@@ -184,54 +198,67 @@ function Settings() {
 
     return (
         <div className={cx('wrapper')}>
-            <div className="d-flex container">
-                {hoso && (
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Download</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Content</th>
-                                <th scope="col">updated_at</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {hoso.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{item.name}</td>
-                                    <td>{item.phone}</td>
-                                    <td>{item.email}</td>
-                                    <td>
-                                        <Link to={'http://127.0.0.1:8000/api/download/' + item.filename}>Download</Link>
-                                    </td>
-                                    <td>{item.status}</td>
-                                    <td>{item.content || ''}</td>
-                                    <td>{item.updated_at}</td>
-                                    <td>
-                                        <button
-                                            className="btn btn-primary btn-lg me-1 mb-1"
-                                            type="button"
-                                            onClick={() => hanlderXuly(item)}
-                                        >
-                                            Xử lý
-                                        </button>
-                                        <button
-                                            className="btn btn-primary btn-lg me-1 mb-1"
-                                            type="button"
-                                            onClick={() => hanlderXuly(item, 'xoa')}
-                                        >
-                                            Xóa
-                                        </button>
-                                    </td>
+            <div className="container w-100">
+                <div className="row d-flex">
+                    <button className="btn btn-primary btn-lg me-1 mb-1 w-30" type="button">
+                        Hồ sơ chờ duyệt
+                    </button>
+                    <button className="btn btn-danger me-1 mb-1 w-30" type="button">
+                        Hồ sơ bị từ chối
+                    </button>
+                    <button className="btn btn-success me-1 mb-1 w-30" type="button">
+                        Hồ sơ đã duyệt
+                    </button>
+                </div>
+                <div className="row">
+                    {hoso && (
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Download</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Content</th>
+                                    <th scope="col">updated_at</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                )}
+                            </thead>
+                            <tbody>
+                                {hoso.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{item.name}</td>
+                                        <td>{item.phone}</td>
+                                        <td>{item.email}</td>
+                                        <td>
+                                            <Link to={url + 'download/' + item.filename}>Download</Link>
+                                        </td>
+                                        <td>{item.status}</td>
+                                        <td>{item.content || ''}</td>
+                                        <td>{item.updated_at}</td>
+                                        <td>
+                                            <button
+                                                className="btn btn-primary btn-lg me-1 mb-1"
+                                                type="button"
+                                                onClick={() => hanlderXuly(item)}
+                                            >
+                                                Xử lý
+                                            </button>
+                                            <button
+                                                className="btn btn-primary btn-lg me-1 mb-1"
+                                                type="button"
+                                                onClick={() => hanlderXuly(item, 'xoa')}
+                                            >
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
             </div>
         </div>
     );

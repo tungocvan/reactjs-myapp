@@ -6,20 +6,21 @@ import { useParams } from 'react-router-dom';
 import { formattedDateTime } from '~/utils/functions';
 import classNames from 'classnames/bind';
 import styles from './Inbox.module.scss';
+import UploadFile from '~/components/UploadFile';
 
 const cx = classNames.bind(styles);
-
-function UploadFile({ title, onFileChange, name }) {
-    const idLabel = 'file-' + Math.floor(Math.random() * 10);
-    return (
-        <div className="mb-3">
-            <label className="form-label" htmlFor={idLabel}>
-                {title}
-            </label>
-            <input className="form-control" id={idLabel} type="file" onChange={onFileChange} name={name} />
-        </div>
-    );
-}
+const url = process.env.REACT_APP_URL_SERVER;
+// function UploadFile({ title, onFileChange, name }) {
+//     const idLabel = 'file-' + Math.floor(Math.random() * 10);
+//     return (
+//         <div className="mb-3">
+//             <label className="form-label" htmlFor={idLabel}>
+//                 {title}
+//             </label>
+//             <input className="form-control" id={idLabel} type="file" onChange={onFileChange} name={name} />
+//         </div>
+//     );
+// }
 
 function Inbox() {
     let params = useParams();
@@ -47,7 +48,7 @@ function Inbox() {
         formData.append('date', formattedDateTime(dateTime));
         console.log('formData:', formData);
         setStatus(false);
-        fetch('https://api.tungocvan.com/api/upload', {
+        fetch(url + 'upload', {
             method: 'POST',
             body: formData,
         })
@@ -77,7 +78,7 @@ function Inbox() {
     useEffect(() => {
         if (params?.phone) {
             //console.log(params.phone); // "one/two"
-            fetch('https://api.tungocvan.com/api/tracuu/hoso/' + params?.phone, {
+            fetch(url + 'tracuu/hoso/' + params?.phone, {
                 method: 'GET',
             })
                 .then((response) => response.json())
