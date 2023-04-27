@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import classNames from 'classnames/bind';
-import styles from './UploadFile.module.scss';
+import React from 'react';
+// import classNames from 'classnames/bind';
+// import styles from './UploadFile.module.scss';
 import './styles.css';
 // https://reactdatepicker.com/
-const cx = classNames.bind(styles);
+//const cx = classNames.bind(styles);
 
 function UploadFile({ title, onFileChange, name }) {
     const idLabel = 'file-' + Math.floor(Math.random() * 10);

@@ -76,7 +76,7 @@ function Inbox() {
     };
 
     useEffect(() => {
-        if (params?.phone) {
+        if (params.phone) {
             //console.log(params.phone); // "one/two"
             fetch(url + 'tracuu/hoso/' + params?.phone, {
                 method: 'GET',
@@ -87,7 +87,7 @@ function Inbox() {
                     setHosoCurrent(data);
                 });
         }
-    }, []);
+    }, [params.phone]);
 
     return (
         (status && (

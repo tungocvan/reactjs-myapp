@@ -9,6 +9,8 @@ const url = process.env.REACT_APP_URL_SERVER;
 function Settings() {
     const [file, setFile] = useState();
     const [hoso, setHoso] = useState('');
+    const [actionHoso, setActionHoso] = useState('pending');
+    const [countHoso, setCountHoso] = useState();
     const [editHoso, setEditHoso] = useState(false);
     const [editHosoStatus, setEditHosoStatus] = useState(true);
     const [hosoItem, sethosoItem] = useState('');
@@ -65,6 +67,7 @@ function Settings() {
                 setEditHoso(false);
                 setEditHosoStatus(false);
                 setFile(null);
+                setActionHoso(action);
             });
     };
 
@@ -74,19 +77,45 @@ function Settings() {
         })
             .then((response) => response.json())
             .then((data) => {
-                // console.log(data.hoso.data);
-                setHoso(data.hoso.data);
-                setEditHosoStatus(false);
+                let tmpHoso = [];
+                let pending = 0;
+                let deny = 0;
+                let success = 0;
+                if (data.hoso.data.length > 0) {
+                    data.hoso.data.forEach((item) => {
+                        //console.log(item.status);
+                        if (item.status === 'pending') {
+                            pending = pending + 1;
+                        }
+                        if (item.status === 'deny') {
+                            deny = deny + 1;
+                        }
+                        if (item.status === 'success') {
+                            success = success + 1;
+                        }
+                        if (item.status === actionHoso) {
+                            tmpHoso.push(item);
+                        }
+                    });
+                    setCountHoso({
+                        pending: pending,
+                        deny: deny,
+                        success: success,
+                    });
+                    setHoso(tmpHoso);
+                    setEditHosoStatus(false);
+                }
+                //let tmpHoso = data.hoso.data.filter((item) => item.status === actionHoso);
             });
-    }, []);
+    }, [actionHoso]);
 
     useEffect(() => {
         if (
             (noidung !== '' && noidung !== hosoItem.content) ||
             (statusAction !== '' && statusAction !== hosoItem.status)
         ) {
-            console.log('hosoItem:', hosoItem);
-            console.log('hoso:', hoso);
+            // console.log('hosoItem:', hosoItem);
+            // console.log('hoso:', hoso);
             let id = hoso.findIndex((item) => item.id === hosoItem.id);
             hoso[id].content = noidung;
             hoso[id].status = statusAction;
@@ -178,9 +207,9 @@ function Settings() {
                             <button
                                 className="btn btn-primary btn-lg me-1 mt-2"
                                 type="button"
-                                onClick={() => updateHoso('bosung')}
+                                onClick={() => updateHoso('deny')}
                             >
-                                Bổ sung
+                                Không duyệt
                             </button>
                         </div>
                         <button
@@ -200,14 +229,37 @@ function Settings() {
         <div className={cx('wrapper')}>
             <div className="container w-100">
                 <div className="row d-flex">
-                    <button className="btn btn-primary btn-lg me-1 mb-1 w-30" type="button">
-                        Hồ sơ chờ duyệt
+                    <button
+                        className={
+                            'btn btn-primary btn-lg me-1 mb-1 w-30 ' + cx(actionHoso === 'pending' ? 'disabled' : '')
+                        }
+                        type="button"
+                        onClick={() => {
+                            setActionHoso('pending');
+                            setEditHosoStatus(true);
+                        }}
+                    >
+                        Hồ sơ chờ duyệt <span className="badge bg-primary-500 ms-2">{countHoso.pending}</span>
                     </button>
-                    <button className="btn btn-danger me-1 mb-1 w-30" type="button">
-                        Hồ sơ bị từ chối
+                    <button
+                        className={'btn btn-danger me-1 mb-1 w-30 ' + cx(actionHoso === 'deny' ? 'disabled' : '')}
+                        type="button"
+                        onClick={() => {
+                            setActionHoso('deny');
+                            setEditHosoStatus(true);
+                        }}
+                    >
+                        Hồ sơ bị từ chối <span className="badge bg-primary-500 ms-2">{countHoso.deny}</span>
                     </button>
-                    <button className="btn btn-success me-1 mb-1 w-30" type="button">
-                        Hồ sơ đã duyệt
+                    <button
+                        className={'btn btn-success me-1 mb-1 w-30 ' + cx(actionHoso === 'success' ? 'disabled' : '')}
+                        type="button"
+                        onClick={() => {
+                            setEditHosoStatus(true);
+                            setActionHoso('success');
+                        }}
+                    >
+                        Hồ sơ đã duyệt <span className="badge bg-primary-500 ms-2">{countHoso.success}</span>
                     </button>
                 </div>
                 <div className="row">
