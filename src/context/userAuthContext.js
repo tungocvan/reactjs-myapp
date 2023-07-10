@@ -26,12 +26,13 @@ export function UserAuthContextProvider({ children }) {
     }
     function googleSignIn() {
         const googleAuthProvider = new GoogleAuthProvider();
+        //   console.log('auth:', auth);
         return signInWithPopup(auth, googleAuthProvider);
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-            //console.log("Auth", currentuser);
+            //console.log('Auth', currentuser.email);
             setUser(currentuser);
         });
 

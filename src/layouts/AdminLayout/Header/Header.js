@@ -23,7 +23,7 @@ function Header() {
                 {/* Logo */}
                 <Logo />
                 {/* Search */}
-                <Search />
+                {!show && <Search />}
                 {/* Account */}
                 {(show && <Account />) || (
                     <Link to="/signin" className="btn btn-primary btn-lg me-1 mb-1">

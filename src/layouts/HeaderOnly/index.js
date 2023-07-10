@@ -5,13 +5,12 @@ import styles from './HeaderOnly.module.scss';
 
 const cx = classNames.bind(styles);
 function HeaderOnly({ children }) {
-    
     return (
         <div>
             <Header />
-            <div className={cx("container")}> 
-                <Sidebar />  
-                <div className={cx("content")}>{children}</div>
+            <div className={cx('container')}>
+                <Sidebar />
+                <div className={cx('content')}>{children}</div>
             </div>
         </div>
     );
