@@ -40,7 +40,15 @@ function Inbox() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const { name, email, phone, filebieumau } = event.target;
-        //console.log('hoso:', hoso);
+        if (name.value === '') {
+            alert('Vui lòng nhập họ tên');
+            return false;
+        }
+        if (phone.value.length < 10) {
+            alert('số điện thoại ít hơn 10 số');
+            return false;
+        }
+
         let dateTime = new Date();
         const formData = new FormData();
         formData.append('file', file);
@@ -225,7 +233,7 @@ function Inbox() {
                                                     type="text"
                                                     name="name"
                                                     placeholder="Họ và tên"
-                                                    id="bootstrap-wizard-wizard-name"
+                                                    id="name"
                                                 />
                                             </div>
                                             <div className="mb-2">
@@ -237,7 +245,7 @@ function Inbox() {
                                                     type="text"
                                                     name="phone"
                                                     placeholder="Số điện thoại"
-                                                    id="bootstrap-wizard-wizard-email"
+                                                    id="phone"
                                                 />
                                             </div>
                                             <div className="mb-2">

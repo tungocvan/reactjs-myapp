@@ -11,6 +11,7 @@ const url = process.env.REACT_APP_URL_SERVER;
 function Settings() {
     const [file, setFile] = useState();
     const [hoso, setHoso] = useState('');
+    const [hosoFilter, setHosoFilter] = useState('');
     const [actionHoso, setActionHoso] = useState('pending');
     const [countHoso, setCountHoso] = useState();
     const [editHoso, setEditHoso] = useState(false);
@@ -18,7 +19,7 @@ function Settings() {
     const [hosoItem, sethosoItem] = useState('');
     const [noidung, setNoidung] = useState('');
     const [statusAction, setStatusAction] = useState('');
-
+    const [search, setSearch] = useState('');
     const handleFileChange = (e) => {
         if (e.target.files) {
             setFile(e.target.files[0]);
@@ -73,6 +74,33 @@ function Settings() {
             });
     };
 
+    const handleSearch = (e) => {
+        let txtSerach = e.target.value;
+        let tmpHoso = [];
+        //console.log('txtSerach:', txtSerach.length);
+        if (txtSerach.length === 1 && tmpHoso.length === 0) {
+            setHosoFilter(hoso);
+        }
+        setSearch(txtSerach);
+        //let filterHoso = hoso.filter((item) => item.phone === search);
+        // console.log(filterHoso);
+        // console.log(hoso);
+        // setHoso(filterHoso);
+        if (search.length > 3) {
+            hoso.forEach((item) => {
+                if (item.phone.includes(search)) {
+                    tmpHoso.push(item);
+                }
+            });
+
+            if (tmpHoso.length > 0) {
+                setHoso(tmpHoso);
+            }
+        } else {
+            setHoso(hosoFilter);
+        }
+        //console.log(tmpHoso);
+    };
     useEffect(() => {
         fetch(url + 'tracuu/hoso', {
             method: 'GET',
@@ -106,6 +134,8 @@ function Settings() {
                     });
                     setHoso(tmpHoso);
                     setEditHosoStatus(false);
+                    setSearch('');
+                    //console.log('actionHoso:', actionHoso);
                 }
                 //let tmpHoso = data.hoso.data.filter((item) => item.status === actionHoso);
             });
@@ -230,6 +260,16 @@ function Settings() {
     return (
         <div className={cx('wrapper')}>
             <div className="container w-100">
+                <div className="row search-box navbar-top-search-box d-none d-lg-block mb-2">
+                    <input
+                        className="form-control search-input fuzzy-search rounded-pill form-control-sm"
+                        type="search"
+                        value={search}
+                        placeholder="Tìm kiếm tên hoặc số điện thoại..."
+                        aria-label="Search"
+                        onChange={handleSearch}
+                    />
+                </div>
                 <div className="row d-flex">
                     <button
                         className={
