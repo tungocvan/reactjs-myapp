@@ -33,7 +33,12 @@ const Login = () => {
         e.preventDefault();
         try {
             await googleSignIn();
-            navigate('/settings');
+            if (user.email === 'tungocvan@gmail.com' || user.email === 'chaule.lengoc@gmail.com') {
+                navigate('/settings');
+            } else {
+                alert('Tài khoản của bạn không thể quản trị.');
+                navigate('/logout');
+            }
         } catch (error) {
             console.log(error.message);
         }
@@ -43,8 +48,13 @@ const Login = () => {
         if (user === null || Object.keys(user).length === 0) {
             setShow(true);
         } else {
-            console.log('user:', user);
-            navigate('/settings');
+            console.log('user:', user.email);
+            if (user.email === 'tungocvan@gmail.com' || user.email === 'chaule.lengoc@gmail.com') {
+                navigate('/settings');
+            } else {
+                alert('Tài khoản của bạn không thể quản trị.');
+                navigate('/logout');
+            }
         }
     }, [user, navigate]);
 

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 function Search() {
     const [phone, setPhone] = useState('');
-    console.log('phone:', phone);
+
     return (
         <div
             className="search-box navbar-top-search-box d-none d-lg-block"

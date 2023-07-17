@@ -4,8 +4,10 @@ import classNames from 'classnames/bind';
 import styles from './Settings.module.scss';
 import UploadFile from '~/components/UploadFile';
 import { formattedDateTime } from '~/utils/functions';
+
 const cx = classNames.bind(styles);
 const url = process.env.REACT_APP_URL_SERVER;
+
 function Settings() {
     const [file, setFile] = useState();
     const [hoso, setHoso] = useState('');

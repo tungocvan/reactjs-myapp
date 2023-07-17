@@ -21,7 +21,7 @@ const publicRoutes = [
     { path: '/home', component: Home, layout: 'Layout' },
     { path: '/contact/*', component: Contact, layout: 'Layout' },
     { path: '/product/:categoryId/p?/:productId?', component: Product, layout: 'Layout' },
-    { path: '/bmct', component: Inbox, layout: 'Layout' },
+    { path: '/bmct/*', component: Inbox, layout: 'Layout' },
     { path: '/bmct/phone/:phone', component: Inbox, layout: 'Layout' },
     { path: '*', component: Login },
 ];
