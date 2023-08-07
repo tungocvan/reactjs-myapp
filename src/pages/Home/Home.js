@@ -8,7 +8,7 @@ function Home() {
         <div className={cx('wrapper')}>
             <Link to="/bmct">
                 <button className="btn btn-primary btn-lg me-1 mb-1" type="button">
-                    HÀNH CHÍNH CÔNG
+                    THỦ TỤC HÀNH CHÍNH
                 </button>
             </Link>
         </div>

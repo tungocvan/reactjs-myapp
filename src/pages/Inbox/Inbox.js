@@ -40,12 +40,17 @@ function Inbox() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const { name, email, phone, filebieumau } = event.target;
+        console.log('filebieumau:', filebieumau.value);
         if (name.value === '') {
             alert('Vui lòng nhập họ tên');
             return false;
         }
         if (phone.value.length < 10) {
             alert('số điện thoại ít hơn 10 số');
+            return false;
+        }
+        if (filebieumau.value === '') {
+            alert('Vui lòng đính kèm file');
             return false;
         }
 
@@ -76,7 +81,7 @@ function Inbox() {
     //console.log('hoso:', hoso);
 
     const handleDownload = () => {
-        const fileUrl = '/assets/bm/' + bm + '.pdf';
+        const fileUrl = '/assets/bm/' + bm + '.docx';
 
         // Tạo một thẻ <a> ẩn, thiết lập thuộc tính href là đường dẫn tới file, và mô phỏng sự kiện click để kích hoạt việc tải xuống
         const link = document.createElement('a');
@@ -92,10 +97,10 @@ function Inbox() {
                 setTitle('Điều chỉnh thông tin học sinh');
                 break;
             case 'bm02':
-                setTitle('Cấp lại bảng sao văn bằng');
+                setTitle('Cấp lại bản sao văn bằng');
                 break;
             case 'bm03':
-                setTitle('Chuyển đến trường trong nước');
+                setTitle('Chuyển đến/đi trường trong nước');
                 break;
             case 'bm04':
                 setTitle('Chuyển đến trường ngoài nước');
@@ -104,10 +109,13 @@ function Inbox() {
                 setTitle('Chuyển lớp');
                 break;
             case 'bm06':
-                setTitle('Đơn xin miễn giảm học phí');
+                setTitle('Đơn miễn giảm học phí');
                 break;
             case 'bm07':
-                setTitle('Hồ sơ đề nghị miễn giảm học phí');
+                setTitle('Xác nhận học sinh đang học tại trường');
+                break;
+            default:
+                setTitle('Điều chỉnh thông tin học sinh');
                 break;
         }
         //console.log(bm);
@@ -134,7 +142,7 @@ function Inbox() {
                     <div className="col-3 hide-inbox-sidebar">
                         <div className="card text-white bg-primary">
                             <div className="card-body">
-                                <h4 className="card-title text-white">HÀNH CHÍNH CÔNG</h4>
+                                <h4 className="card-title text-white">THỦ TỤC HÀNH CHÍNH</h4>
                                 <Link
                                     className="card-text text-white"
                                     to="/bmct/bm01"
@@ -147,21 +155,21 @@ function Inbox() {
                                     to="/bmct/bm02"
                                     onClick={() => handleBieuMau('bm02')}
                                 >
-                                    <p>Cấp lại bảng sao văn bằng</p>
+                                    <p>Cấp lại bản sao văn bằng</p>
                                 </Link>
                                 <Link
                                     className="card-text text-white"
                                     to="/bmct/bm03"
                                     onClick={() => handleBieuMau('bm03')}
                                 >
-                                    <p>Chuyển đến trường trong nước</p>
+                                    <p>Chuyển đến/đi từ trường trong nước</p>
                                 </Link>
                                 <Link
                                     className="card-text text-white"
                                     to="/bmct/bm04"
                                     onClick={() => handleBieuMau('bm04')}
                                 >
-                                    <p>Chuyển đến trường ngoài nước</p>
+                                    <p>Chuyển đến từ trường ngoài nước</p>
                                 </Link>
                                 <Link
                                     className="card-text text-white"
@@ -175,14 +183,14 @@ function Inbox() {
                                     to="/bmct/bm06"
                                     onClick={() => handleBieuMau('bm06')}
                                 >
-                                    <p>Đơn xin miễn giảm học phí</p>
+                                    <p>Đơn miễn giảm học phí</p>
                                 </Link>
                                 <Link
                                     className="card-text text-white"
                                     to="/bmct/bm07"
                                     onClick={() => handleBieuMau('bm07')}
                                 >
-                                    <p>Hồ sơ đề nghị miễn giảm học phí</p>
+                                    <p>Xác nhận học sinh đang học tại trường</p>
                                 </Link>
                             </div>
                         </div>

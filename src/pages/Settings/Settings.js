@@ -223,7 +223,7 @@ function Settings() {
                         defaultValue={noidung}
                         onChange={(e) => setNoidung(e.target.value)}
                     />
-                    <UploadFile title="Đơn xin chuyển trường" onFileChange={handleFileChange} name="filebieumau" />
+                    <UploadFile title="BIỂU MẪU ĐÃ ĐIỀN THÔNG TIN" onFileChange={handleFileChange} name="filebieumau" />
                     <div style={{ flexDirection: 'row', display: 'flex', justifyContent: 'space-between' }}>
                         <div className="mb-0">
                             <button
