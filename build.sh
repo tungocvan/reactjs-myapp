@@ -5,10 +5,3 @@ cp htaccess build
 tar -czvf dichvucong.tar.gz --exclude='*.Identifier' build/
 sshpass -p '13062021@Han' scp -r dichvucong.tar.gz nhathhmd@tungocvan.com:/home1/nhathhmd/public_html/chau
 sshpass -p '13062021@Han' ssh nhathhmd@tungocvan.com
-cd ~/public_html/chau
-rm -rf dichvucong
-mkdir dichvucong
-tar -xvf dichvucong.tar.gz -C dichvucong
-cd dichvucong/build/
-mv htaccess .htaccess
-echo "da hoan thanh cai dat"

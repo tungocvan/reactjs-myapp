@@ -9,7 +9,7 @@ function Search() {
     const [phone, setPhone] = useState('');
     return (
         <div
-            className="search-box navbar-top-search-box d-none d-lg-block"
+            className="search-box navbar-top-search-box d-lg-block"
             data-list='{"valueNames":["title"]}'
             style={{ width: '25rem' }}
         >
@@ -515,7 +515,7 @@ function Search() {
                                             </div>
                                         </div>
                                         <div className="text-center">
-                                            <p className="fallback fw-bold fs-1 d-none">No Result Found.</p>
+                                            <p className="fallback fw-bold fs-1">No Result Found.</p>
                                         </div>
                                     </div>
                                 </div>

@@ -7,6 +7,7 @@ import { formattedDateTime } from '~/utils/functions';
 import classNames from 'classnames/bind';
 import styles from './Inbox.module.scss';
 import UploadFile from '~/components/UploadFile';
+import Thongke from '~/components/Thongke';
 
 const cx = classNames.bind(styles);
 const url = process.env.REACT_APP_URL_SERVER;
@@ -114,6 +115,9 @@ function Inbox() {
             case 'bm07':
                 setTitle('Xác nhận học sinh đang học tại trường');
                 break;
+            case 'bm08':
+                setTitle('Đơn đề nghị cấp bảng điểm');
+                break;
             default:
                 setTitle('Điều chỉnh thông tin học sinh');
                 break;
@@ -192,8 +196,16 @@ function Inbox() {
                                 >
                                     <p>Xác nhận học sinh đang học tại trường</p>
                                 </Link>
+                                <Link
+                                    className="card-text text-white"
+                                    to="/bmct/bm07"
+                                    onClick={() => handleBieuMau('bm08')}
+                                >
+                                    <p>Đơn đề nghị cấp bảng điểm</p>
+                                </Link>
                             </div>
                         </div>
+                        <Thongke />
                     </div>
                     <div className="p-2 flex-grow-1 container ">
                         <div className="card theme-wizard mb-5" data-theme-wizard="data-theme-wizard">
